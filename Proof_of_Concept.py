@@ -32,4 +32,4 @@ pygame.mixer.music.load(io.BytesIO(audio_stream.read()))
 pygame.mixer.music.play()
 
 while pygame.mixer.music.get_busy():
-    pygame.time.Clock().tick(10)
+    pygame.time.Clock().tick(1)
