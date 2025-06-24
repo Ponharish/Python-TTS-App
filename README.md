@@ -63,11 +63,7 @@ Follow these steps to set up your app with Amazon Polly:
    - After entering all the necessary details, click on the **"Submit"** button.
    - The app will generate the audio and **play it through your speakers**.
 
----
-
-# Troubleshooting
-
-### Common Issues and Solutions
+### Troubleshooting
 
 - **Missing Inputs**:  
   Ensure that **all required fields** (AWS Access Key, AWS Secret Key, Region, Engine Type, and Text) are filled out. If any field is missing, the app will prompt you to provide the necessary information.
