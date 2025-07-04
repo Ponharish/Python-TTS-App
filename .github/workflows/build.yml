@@ -1,4 +1,4 @@
-name: Cross-platform Build with PyLauncher
+name: Cross-platform Build with PyInstaller
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   build:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -27,17 +27,21 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylauncher
+        pip install pyinstaller
 
-    - name: Build executable (Linux/macOS)
-      if: matrix.os != 'windows-latest'
+    - name: Build executable
       run: |
-        python -m pylauncher build "Python TTS App.py" --output dist/
+        pyinstaller --onefile --windowed "Python TTS App.py"
 
-    - name: Build executable (Windows)
+    - name: Rename output (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        python -m pylauncher build "Python TTS App.py" --output dist/
+        rename "dist\Python TTS App.exe" "dist\app-windows.exe"
+
+    - name: Rename output (Linux/macOS)
+      if: matrix.os != 'windows-latest'
+      run: |
+        mv "dist/Python TTS App" "dist/app-${{ matrix.os }}"
 
     - name: Upload executable artifact
       uses: actions/upload-artifact@v4
