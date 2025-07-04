@@ -76,7 +76,7 @@ Follow these steps to set up your app with Amazon Polly:
 ### Troubleshooting
 
 Credential Registration Page
-![AWS Credentials Registration page Error](./pictures/configureKeys_Error.png)
+![AWS Credentials Registration page Error](./pictures/configureKeys_Error.png) 
 - **Invalid AWS Access Key**:  
   Ensure that the **AWS Access Key** entered is **valid**. Double-check that there are **no extra spaces or incorrect characters** before or after the key.
 
