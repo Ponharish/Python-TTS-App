@@ -32,7 +32,7 @@ jobs:
     - name: Build executable (Linux/macOS)
       if: matrix.os != 'windows-latest'
       run: |
-        pylauncher build "Python TTS App.py" --output dist/
+        python -m pylauncher build "Python TTS App.py" --output dist/
 
     - name: Build executable (Windows)
       if: matrix.os == 'windows-latest'
