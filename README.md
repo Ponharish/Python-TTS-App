@@ -21,13 +21,20 @@ Follow these steps to set up your app with Amazon Polly:
 - Click **Next: Permissions**.
 
 ### 4. Assign Permissions to the IAM User
-- On the **Set Permissions** page, you can either assign existing permissions or create a custom policy.
-- You can choose to directly assign permissions like **AmazonPollyFullAccess** or create a custom policy for more control over permissions.
-- Once done, click **Next: Tags**, add tags if needed, then click **Next: Review**.
+- On the **Set Permissions** page, select **Attach policies directly**
+- Add the following permissions
+   - AmazonPollyFullAccess
+   - ServiceQuotasFullAccess
+   - ServiceQuotasReadOnlyAccess
+- Once done, click **Next: Tags**, then click **Next: Review**.
 - Finally, click **Create user**.
 
 ### 5. Save the AWS Credentials
-- After the IAM user is created, you will see the **Access Key ID** and **Secret Access Key**.
+- After the IAM user is created, click on the newly created user from the users page.
+- Navigate to **security credentials**, then click **Create Access Key**.
+- Select **Application running outside AWS** and click Next.
+- In the following page, click **Create access key**.
+- The keys will be displayed in the following page.
 - **Important**: Store these credentials securely.
 
 ---
