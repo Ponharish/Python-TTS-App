@@ -32,7 +32,7 @@ jobs:
 
     - name: Build executable
       run: |
-        pyinstaller --onefile --windowed "Python TTS App.py"
+        pyinstaller --onefile --windowed "Python_TTS.py"
 
     - name: Rename output (Windows)
       if: matrix.os == 'windows-latest'

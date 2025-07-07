@@ -11,6 +11,7 @@ def changeService():
         keymanagement.deleteKeyFile(AWS_FILE_PATH)
     elif keymanagement.fileExists(GOOGLE_FILE_PATH):
         keymanagement.deleteKeyFile(GOOGLE_FILE_PATH)
+        
     register.registerKey()
     
     if keymanagement.fileExists(AWS_FILE_PATH):
