@@ -18,5 +18,8 @@ def retrieveKeys(filename):
         keys = json.load(file)
     return keys
 
+def retrieveFilePath(filename):
+    return filename
+
 def deleteKeyFile(filename):
     os.remove(filename)

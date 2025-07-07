@@ -1,9 +1,16 @@
 import boto3
 import json
 import os
+import shutil
+import sys
 
 import tkinter.messagebox
 from tkinter import *
+from tkinter import filedialog
+
+from google.oauth2 import service_account
+from google.cloud import texttospeech
+from google.api_core.exceptions import GoogleAPIError
 
 from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError, EndpointConnectionError
 
@@ -14,7 +21,7 @@ def registerKey():
         if service == "AWS":
             loadAwsKey()
         else:
-            print("google")
+            loadGoogleKey()
 
         
     root = Tk()
@@ -124,12 +131,6 @@ def loadAwsKey():
     headerLabel = Label(headerFrame, text = "Key Management", bg = "grey", anchor = "center", fg = "white", font = 'arial 29')
     headerLabel.grid(row = 0, column = 0, sticky = "nsew")
 
-    ###
-    # INCLUDE A BUTTON HERE TO TOGGLE TO GOOGLE TTS
-    # or change the architecture with a header only and a drop down menu
-    # then 2 functions, that will load the 2 diff GUI depending on the selection 
-    ###
-
     infoLabel = Label(headerFrame,
                       text = "\nEnter your AWS credentials below to be saved.      ",
                       bg = "grey", anchor = "w", fg = "white",font = 'arial 20', padx = 30)
@@ -166,6 +167,85 @@ def loadAwsKey():
     #Errors
     errorFrame = Frame(mainFrame, bg = "grey")
     errorFrame.grid(row = 5, column = 0, sticky = "nsew", pady = (10, 0))
+    errorFrame.grid_columnconfigure(0, weight = 1)
+    errorLabel = Label(errorFrame, text = "", anchor = "center", bg = "grey", fg = "#9D0000", font = "Arial 18")
+    errorLabel.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
+
+    root.mainloop()
+
+def loadGoogleKey():
+    def validateKey(keyPath):
+        # A simple ops to validate the key
+        try:
+            credentials = service_account.Credentials.from_service_account_file(keyPath)
+            client = texttospeech.TextToSpeechClient(credentials=credentials)          
+            response = client.list_voices()
+            return True
+        except GoogleAPIError as e:
+            errorLabel.config(text = "Google API Error")
+            return False
+        except Exception as e:
+            
+            errorLabel.config(text = "Invalid key or other error")
+            return False
+
+
+    def openFile():
+        appKeyPath = os.path.expanduser("./.google_key.json")
+        keyPath = filedialog.askopenfilename(
+            title="Select Google TTS Service Account JSON Key",
+            filetypes=[("JSON Files", "*.json")]
+        )
+
+        if not keyPath:
+            return
+
+        if not validateKey(keyPath):
+            return
+
+        try:
+            os.makedirs(os.path.dirname(appKeyPath), exist_ok=True)
+            shutil.copy(keyPath, appKeyPath)
+            tkinter.messagebox.showinfo("Key Management", "The key has been saved")
+            root.destroy()
+        except Exception as e:
+            print(e)
+            errorLabel.config(text = "Error: Failed to load Key")           
+
+    root = Tk()
+    root.title('Python TTS App')
+    root.grid_rowconfigure(0, weight = 1)
+    root.grid_columnconfigure(0, weight = 1)
+    root.minsize(width = 800, height = 200)
+
+    mainFrame = Frame(root, width = 700, height = 400, bg = "grey")
+    mainFrame.grid(row = 0, column = 0, sticky = "nsew")
+    mainFrame.grid_columnconfigure(0, weight = 1)
+
+    #Header
+    headerFrame = Frame(mainFrame, bg = "grey")
+    headerFrame.grid(row = 0, column = 0, sticky = "nsew")
+    headerFrame.grid_columnconfigure(0, weight = 1)
+
+    headerLabel = Label(headerFrame, text = "Key Management", bg = "grey", anchor = "center", fg = "white", font = 'arial 29')
+    headerLabel.grid(row = 0, column = 0, sticky = "nsew")
+
+    infoLabel = Label(headerFrame,
+                      text = "\nSelect the JSON file containing your google service account key",
+                      bg = "grey", anchor = "w", fg = "white",font = 'arial 20', padx = 30)
+    infoLabel.grid(row = 2, column = 0, sticky = "nsew")
+
+    #File Browse button
+    openFileFrame = Frame(mainFrame, bg = "grey")
+    openFileFrame.grid(row = 1, column = 0, sticky = "nsew", pady = (10, 0))
+    openFileFrame.grid_columnconfigure(0, weight = 1)
+    openFileButton = Button(openFileFrame, text = "Open File", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = openFile)
+    openFileButton.pack(side = "bottom", pady = 5)
+    openFileButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
+
+    #Errors
+    errorFrame = Frame(mainFrame, bg = "grey")
+    errorFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
     errorFrame.grid_columnconfigure(0, weight = 1)
     errorLabel = Label(errorFrame, text = "", anchor = "center", bg = "grey", fg = "#9D0000", font = "Arial 18")
     errorLabel.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
