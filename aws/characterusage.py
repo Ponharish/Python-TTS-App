@@ -1,5 +1,5 @@
 import boto3
-import formatteddate
+from util import formatteddate
 
 from datetime import datetime, timedelta
 
@@ -20,7 +20,7 @@ def fetchUsage(aws_access_key_id, aws_secret_access_key, region):
         Dimensions = [{'Name': 'Operation', 'Value': 'SynthesizeSpeech'}],
         StartTime = start_time,
         EndTime = end_time,
-        Period = 300,  
+        Period = 600,  
         Statistics = ['Sum']
     )
 

@@ -2,26 +2,31 @@ import boto3
 import io
 import pygame
 
-import availablelanguages
-import availableregions
-import availablevoices
-import characterusage
-import keymanagement
+from aws import availablelanguages
+from aws import availableregions
+from aws import availablevoices
+from aws import characterusage
+
+from keymanagement import changeservice
+from keymanagement import keymanagement
+from keymanagement import register
 
 from botocore.exceptions import ClientError, EndpointConnectionError
 
 from tkinter import *
 
+AWS_FILE_PATH = ".aws_keys.txt"
 
 def startAppGui():
     global region
     
-    def reconfigureKeys():
+    def reconfigureKeys(): #move this logic to another file (root.destroy stays here. But the resitering will take place in another file
+        #that file, depending on the key provided, will either open polly or google cloud version of the app
+
+        #ALSO change name to SIGN OUT
+    
         root.destroy()
-        keymanagement.registerKey()
-        while not keymanagement.fileExists():
-            keymanagement.registerKey()
-        startAppGui()
+        changeservice.changeService()
         
     
     def reconfigureLanguage(*args):
@@ -56,7 +61,7 @@ def startAppGui():
         reconfigureVoice()
         
     def updateQuota():
-        keys = keymanagement.retrieveKeys()
+        keys = keymanagement.retrieveKeys(AWS_FILE_PATH)
         awsAccessKey = keys['AWS_ACCESS_KEY_ID']
         awsSecretKey = keys['AWS_SECRET_ACCESS_KEY']
         statusLabel.config(text = characterusage.fetchUsage(awsAccessKey, awsSecretKey, region))
@@ -76,7 +81,7 @@ def startAppGui():
     def playAudio():
         global region
         
-        keys = keymanagement.retrieveKeys()
+        keys = keymanagement.retrieveKeys(AWS_FILE_PATH)
         awsAccessKey = keys['AWS_ACCESS_KEY_ID']
         awsSecretKey = keys['AWS_SECRET_ACCESS_KEY']
         
@@ -179,7 +184,7 @@ def startAppGui():
     KeyLabel.grid(row = 0, column =1, sticky = "nsew", padx = 30, pady = 10)
     KeyLabel.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
-    keys = keymanagement.retrieveKeys()
+    keys = keymanagement.retrieveKeys(AWS_FILE_PATH)
     awsAccessKey = keys['AWS_ACCESS_KEY_ID']
     awsSecretKey = keys['AWS_SECRET_ACCESS_KEY']
     regions = availableregions.getAvailableRegions(awsAccessKey, awsSecretKey)
@@ -286,11 +291,3 @@ def startAppGui():
 
     root.mainloop()
 
-def main():
-    #Check for keys
-    while not keymanagement.fileExists():
-        keymanagement.registerKey()
-    
-    startAppGui()
-
-main()

@@ -1,5 +1,3 @@
-# Key management
-
 import boto3
 import json
 import os
@@ -9,19 +7,61 @@ from tkinter import *
 
 from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError, EndpointConnectionError
 
-def fileExists(filename = ".aws_keys.txt"):
-    if os.path.exists(filename):
-        return True
-    else:
-        return False
-
-def retrieveKeys(filename = ".aws_keys.txt"):
-    with open(filename, 'r') as file:
-        keys = json.load(file)
-    return keys
-
-
 def registerKey():
+    def selectService():
+        service = serviceVar.get()
+        root.destroy()
+        if service == "AWS":
+            loadAwsKey()
+        else:
+            print("google")
+
+        
+    root = Tk()
+    root.title('Python TTS App')
+    root.grid_rowconfigure(0, weight = 1)
+    root.grid_columnconfigure(0, weight = 1)
+    root.minsize(width = 800, height = 200)
+
+    mainFrame = Frame(root, width = 700, height = 400, bg = "grey")
+    mainFrame.grid(row = 0, column = 0, sticky = "nsew")
+    mainFrame.grid_columnconfigure(0, weight = 1)
+
+    #Header
+    headerFrame = Frame(mainFrame, bg = "grey")
+    headerFrame.grid(row = 0, column = 0, sticky = "nsew")
+    headerFrame.grid_columnconfigure(0, weight = 1)
+
+    headerLabel = Label(headerFrame, text = "Key Management", bg = "grey", anchor = "center", fg = "white", font = 'arial 29')
+    headerLabel.grid(row = 0, column = 0, sticky = "nsew")
+    infoLabel = Label(headerFrame,
+                      text = "\nChoose your TTS Service",
+                      bg = "grey", anchor = "w", fg = "white",font = 'arial 20', padx = 30)
+    infoLabel.grid(row = 2, column = 0, sticky = "nsew")
+
+
+    serviceVar = StringVar(value = "AWS")
+    serviceFrame = Frame(mainFrame, bg = "grey")
+    serviceFrame.grid(row = 1, column = 0, sticky = "nsew", pady = (10, 0))
+    awsRadio = Radiobutton(serviceFrame, text = "AWS", variable = serviceVar, value = "AWS", font = "Arial 20", bg = "grey", fg = "white")
+    awsRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
+    googleRadio = Radiobutton(serviceFrame, text = "Google Cloud", variable = serviceVar, value = "Google", font = "Arial 20", bg = "grey", fg = "white")
+    googleRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
+
+    
+    #Submit button
+    submitFrame = Frame(mainFrame, bg = "grey")
+    submitFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
+    submitFrame.grid_columnconfigure(0, weight = 1)
+    submitButton = Button(submitFrame, text = "Next", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = selectService)
+    submitButton.pack(side = "bottom", pady = 5)
+    submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
+
+    root.mainloop()
+
+    
+    
+def loadAwsKey():
     def validateKeys(awsAccessKey, awsSecretKey):
         session = boto3.Session(
             aws_access_key_id = awsAccessKey,
@@ -84,10 +124,16 @@ def registerKey():
     headerLabel = Label(headerFrame, text = "Key Management", bg = "grey", anchor = "center", fg = "white", font = 'arial 29')
     headerLabel.grid(row = 0, column = 0, sticky = "nsew")
 
+    ###
+    # INCLUDE A BUTTON HERE TO TOGGLE TO GOOGLE TTS
+    # or change the architecture with a header only and a drop down menu
+    # then 2 functions, that will load the 2 diff GUI depending on the selection 
+    ###
+
     infoLabel = Label(headerFrame,
-                      text = "\nYour AWS credentials are not found in the system. \nEnter your AWS credentials below to be saved.      ",
+                      text = "\nEnter your AWS credentials below to be saved.      ",
                       bg = "grey", anchor = "w", fg = "white",font = 'arial 20', padx = 30)
-    infoLabel.grid(row = 1, column = 0, sticky = "nsew")
+    infoLabel.grid(row = 2, column = 0, sticky = "nsew")
 
     #Credentials
     credentialsFrame = Frame(mainFrame, bg = "grey")
