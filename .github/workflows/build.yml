@@ -37,12 +37,12 @@ jobs:
     - name: Rename output (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        Move-Item "dist\Python TTS App.exe" "dist\app-windows.exe"
+        Move-Item "dist\Python_TTS.exe" "dist\app-windows.exe"
 
     - name: Rename output (Linux/macOS)
       if: matrix.os != 'windows-latest'
       run: |
-        mv "dist/Python TTS App" "dist/app-${{ matrix.os }}"
+        mv "dist/Python_TTS" "dist/app-${{ matrix.os }}"
 
     - name: Upload executable artifact
       uses: actions/upload-artifact@v4
