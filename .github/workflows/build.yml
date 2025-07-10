@@ -55,9 +55,16 @@ jobs:
       run: |
         choco install ffmpeg
 
+    # Build executable
     - name: Build executable
       run: |
-        pyinstaller --onefile --windowed "Python_TTS.py"
+        if [ "${{ runner.os }}" == "macos-latest" ]; then
+          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg:ffmpeg" "Python_TTS.py"
+        elif [ "${{ runner.os }}" == "linux-latest" ]; then
+          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg:ffmpeg" "Python_TTS.py"
+        elif [ "${{ runner.os }}" == "windows-latest" ]; then
+          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg.exe;ffmpeg.exe" "Python_TTS.py"
+        fi
 
     - name: Rename output (Windows)
       if: matrix.os == 'windows-latest'
