@@ -29,6 +29,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller
+    # Install FFmpeg on Linux (Ubuntu)
+    - name: Install FFmpeg (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    # Install FFmpeg on macOS
+    - name: Install FFmpeg (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install ffmpeg
+    
+    # Install Chocolatey on Windows (if not already installed)
+    - name: Install Chocolatey (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force;
+        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+    # Install FFmpeg on Windows
+    - name: Install FFmpeg (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install ffmpeg
 
     - name: Build executable
       run: |
