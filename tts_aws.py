@@ -11,7 +11,11 @@ from keymanagement import changeservice
 from keymanagement import keymanagement
 from keymanagement import register
 
+from audiomanager import playaudio
+
 from botocore.exceptions import ClientError, EndpointConnectionError
+
+from unidecode import unidecode
 
 from tkinter import *
 
@@ -40,7 +44,7 @@ def startAppGui():
         languageVar.set(availableLanguages[0])
         languageMenu['menu'].delete(0, 'end')
         for language in availableLanguages:
-            languageMenu['menu'].add_command(label=language, command=lambda value=language: (languageVar.set(value), updateLanguage())) #THIS IS THE CULPRIT???????
+            languageMenu['menu'].add_command(label=language, command=lambda value=language: (languageVar.set(value), updateLanguage())) 
 
     def reconfigureVoice(*args):
         region = region_var.get()
@@ -80,6 +84,7 @@ def startAppGui():
         
     def playAudio():
         global region
+        errorLabel.config(text = "")
         
         keys = keymanagement.retrieveKeys(AWS_FILE_PATH)
         awsAccessKey = keys['AWS_ACCESS_KEY_ID']
@@ -89,6 +94,7 @@ def startAppGui():
         textType = textTypeVar.get()
         text = mainText.get("1.0", "end-1c")
         voice = voiceVar.get()
+        voice = unidecode(voice)
         language = languageVar.get()
 
         if len(awsAccessKey)  ==  0 or len(awsSecretKey)  ==  0 or len(region)  ==  0:
@@ -135,18 +141,8 @@ def startAppGui():
             errorLabel.config(text = "The region is invalid")
             return
 
-        #MOVE PLAYING OF AUDIO TO ANOTEHR PYTHON MODULE
-
-        errorLabel.config(text = "")
         audio_stream = response['AudioStream']
-
-        pygame.init()
-        pygame.mixer.init()
-        pygame.mixer.music.load(io.BytesIO(audio_stream.read()))
-        pygame.mixer.music.play()
-
-        while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(1)
+        playaudio.playAudio(audio_stream.read())
         updateQuota()
 
 
@@ -177,7 +173,7 @@ def startAppGui():
     credentialsFrame.grid_rowconfigure(2, weight = 1)
     credentialsFrame.grid_columnconfigure(1, weight = 1)
 
-    reconfigureKeysButton = Button(credentialsFrame, text = "Reconfigure Keys", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = reconfigureKeys)
+    reconfigureKeysButton = Button(credentialsFrame, text = "Change Service", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = reconfigureKeys)
     reconfigureKeysButton.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
     reconfigureKeysButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
     KeyLabel = Label(credentialsFrame, text = "AWS Keys are loaded from file", bg = "grey", anchor = "w", fg = "white", font = 'arial 20')
