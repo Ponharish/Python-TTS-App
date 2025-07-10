@@ -29,42 +29,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller
-    # Install FFmpeg on Linux (Ubuntu)
-    - name: Install FFmpeg (Ubuntu)
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y ffmpeg
 
-    # Install FFmpeg on macOS
-    - name: Install FFmpeg (macOS)
-      if: runner.os == 'macOS'
-      run: |
-        brew install ffmpeg
-    
-    # Install Chocolatey on Windows (if not already installed)
-    - name: Install Chocolatey (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force;
-        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-    # Install FFmpeg on Windows
-    - name: Install FFmpeg (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        choco install ffmpeg
-
-    # Build executable
     - name: Build executable
       run: |
-        if [ "${{ runner.os }}" == "macos-latest" ]; then
-          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg:ffmpeg" "Python_TTS.py"
-        elif [ "${{ runner.os }}" == "linux-latest" ]; then
-          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg:ffmpeg" "Python_TTS.py"
-        elif [ "${{ runner.os }}" == "windows-latest" ]; then
-          pyinstaller --onefile --windowed --add-binary "./ffmpeg/ffmpeg.exe;ffmpeg.exe" "Python_TTS.py"
-        fi
+        pyinstaller --onefile --windowed "Python_TTS.py"
 
     - name: Rename output (Windows)
       if: matrix.os == 'windows-latest'
