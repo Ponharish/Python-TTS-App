@@ -2,3 +2,7 @@ boto3
 pygame
 google
 google-cloud-texttospeech
+google-api-python-client
+langcodes
+unidecode
+pyttsx3
