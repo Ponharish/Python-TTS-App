@@ -15,9 +15,11 @@ from google.oauth2 import service_account
 from google.cloud import texttospeech
 from google.api_core.exceptions import GoogleAPIError
 
+from keymanagement import pathresolver
+
 from audiomanager import playaudio
 
-GOOGLE_FILE_PATH = ".google_key.json"
+GOOGLE_FILE_PATH = pathresolver.get_key_file_path(".google_key.json")
 
 def startAppGui():
     def reconfigureKeys(): 

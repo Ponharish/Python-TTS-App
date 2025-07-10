@@ -12,6 +12,8 @@ from google.oauth2 import service_account
 from google.cloud import texttospeech
 from google.api_core.exceptions import GoogleAPIError
 
+from keymanagement import pathresolver
+
 from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError, EndpointConnectionError
 
 def registerKey():
@@ -104,7 +106,7 @@ def loadAwsKey():
 
     def saveKeys(access_key, secret_key, filename = ".aws_keys.txt"):
         keys = {"AWS_ACCESS_KEY_ID": access_key, "AWS_SECRET_ACCESS_KEY": secret_key}
-        with open(filename, 'w') as file:
+        with open(pathresolver.get_key_file_path(filename), 'w') as file:
             json.dump(keys, file)
 
     def processKeys():
@@ -195,7 +197,7 @@ def loadGoogleKey():
 
 
     def openFile():
-        appKeyPath = os.path.expanduser("./.google_key.json")
+        appKeyPath = pathresolver.get_key_file_path(".google_key.json")
         keyPath = filedialog.askopenfilename(
             title="Select Google TTS Service Account JSON Key",
             filetypes=[("JSON Files", "*.json")]
@@ -257,5 +259,6 @@ def loadGoogleKey():
     root.mainloop()
 
 def loadOsKey():
-    with open('.os_tts.txt', 'w') as file:
+    file = pathresolver.get_key_file_path('.os_tts.txt')
+    with open(file, 'w') as file:
         file.write("Os tts Cache")
