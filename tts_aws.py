@@ -24,11 +24,7 @@ AWS_FILE_PATH = ".aws_keys.txt"
 def startAppGui():
     global region
     
-    def reconfigureKeys(): #move this logic to another file (root.destroy stays here. But the resitering will take place in another file
-        #that file, depending on the key provided, will either open polly or google cloud version of the app
-
-        #ALSO change name to SIGN OUT
-    
+    def reconfigureKeys(): 
         root.destroy()
         changeservice.changeService()
         
@@ -281,7 +277,7 @@ def startAppGui():
     #Status - remaining characters
     statusLabel = Label(root, text = "Usage: ", anchor = "sw", bg = "yellow", fg = "#000000", font = "Arial 15")
     statusLabel.grid(row = 6, column = 0, sticky = "nsew")
-    statusInfoLabel = Label(root, text = "[Usage Updates every 5 mins]", anchor = "sw", bg = "yellow", fg = "grey", font = "Arial 15")
+    statusInfoLabel = Label(root, text = "[Usage Updates every 2 mins]", anchor = "sw", bg = "yellow", fg = "grey", font = "Arial 15")
     statusInfoLabel.grid(row = 7, column = 0, sticky = "nsew")
     updateQuota()
 
