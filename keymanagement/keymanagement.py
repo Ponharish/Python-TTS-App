@@ -26,5 +26,3 @@ def retrieveFilePath(filename):
 
 def deleteKeyFile(filename):
     os.remove(pathresolver.get_key_file_path(filename))
-
-

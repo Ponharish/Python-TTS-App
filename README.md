@@ -208,30 +208,6 @@ Main Page
 - **Empty Text Field**:  
   Make sure that the **text field** is not empty. The app will not proceed if no text is provided to convert into speech.
 
-
----
-
-### Using OS Native TTS
-1. After selecting **Os Native TTS** in Service Selection Page, the main page will load.
-
-2. **Main Page**:
-   ![Main page](./pictures/osnative_mainpage.png)
-
-3. **Convert Text to Speech**:
-  - In the main page, first select the language that is to be used
-  - Then choose the **voice** that would read the given text. The list of available voices shown is based on the selected language.
-  - Enter the Text to be Converted to Speech:
-    - Type in the **text**  that you want to be converted to speech. This is the content that will be spoken aloud by TTS.
-
-  - **Click on Submit**:
-    - After entering all the necessary details, click on the **"Submit"** button.
-    - The app will generate the audio file and ask for a location to save the file. Once saved, you can find the audio file at the specified location.
-    <br><b>Important:</b> Unlike the previous 2 TTS services, the app does not provide live playing of the audio generated.
-
-4. **Using another TTS service**:
-  - Click on **Reconfigure Keys**, which will open up the window for choosing the TTS service.
-
-
 ---
 
 ## Target Users
@@ -268,7 +244,7 @@ Main Page
 ## Value Proposition
 
 - **Centralized Platform**
-  - Explore and compare voices from multiple TTS engines (Google, AWS Polly, native OS) in one place.
+  - Explore and compare voices from multiple TTS engines (Google, AWS Polly) in one place.
 
 - **Time-Saving Features**
   - Smart filters for language, voice, gender, and engine type.
@@ -307,7 +283,7 @@ Main Page
 ## Core Features
 
 - **Voice Discovery & Comparison**
-  - Preview voices from multiple providers (Google, AWS Polly, native OS).
+  - Preview voices from multiple providers (Google, AWS Polly).
   - Filter voices by language, gender, engine.
   - Compare voices by playing the same text in different voices.
 
@@ -320,9 +296,6 @@ Main Page
 - **Key & Account Management**
   - Add and manage API keys through a simple GUI.
   - Store credentials securely and locally.
-
-- **Offline Capabilities**
-  - Use OS-native TTS for offline voice generation.
 
 - **Cross-Platform Support**
   - Compatible with Windows, macOS, and Linux (x86 architecture).

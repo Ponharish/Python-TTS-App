@@ -22,11 +22,8 @@ def registerKey():
         root.destroy()
         if service == "AWS":
             loadAwsKey()
-        elif service == "Google":
-            loadGoogleKey()
         else:
-            loadOsKey()
-
+            loadGoogleKey()
         
     root = Tk()
     root.title('Python TTS App')
@@ -58,9 +55,6 @@ def registerKey():
     awsRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
     googleRadio = Radiobutton(serviceFrame, text = "Google Cloud", variable = serviceVar, value = "Google", font = "Arial 20", bg = "grey", fg = "white")
     googleRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
-    osRadio = Radiobutton(serviceFrame, text = "OS Native TTS", variable = serviceVar, value = "OS", font = "Arial 20", bg = "grey", fg = "white")
-    osRadio.grid(row = 0, column = 2, sticky = "w", padx = 50, pady = 5)
-
     
     #Submit button
     submitFrame = Frame(mainFrame, bg = "grey")
@@ -258,7 +252,3 @@ def loadGoogleKey():
 
     root.mainloop()
 
-def loadOsKey():
-    file = pathresolver.get_key_file_path('.os_tts.txt')
-    with open(file, 'w') as file:
-        file.write("Os tts Cache")

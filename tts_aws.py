@@ -282,4 +282,3 @@ def startAppGui():
     updateQuota()
 
     root.mainloop()
-
