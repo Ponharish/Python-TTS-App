@@ -1,6 +1,7 @@
 import boto3
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -16,16 +17,52 @@ from keymanagement import pathresolver
 
 from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError, EndpointConnectionError
 
-def registerKey():
+KEY_CONFIG_FILE = pathresolver.get_key_file_path('../.keys/.keyconfig.json')
+
+
+def validateFileName(file):
+    tempFile = file.split('.')[4]
+    if not re.fullmatch(r'[A-Za-z0-9_]+', tempFile):
+        return "Given Nickname for file is invalid. File name cannot contain special characters"
+    if file == 'Enter a name to identify this config file later':
+        return "Given Nickname for file is invalid. Provide an alternative name"
+    services = []
+    try: #to handle case where file is empty
+        with open(KEY_CONFIG_FILE, 'r') as f:
+            services = json.load(f)
+    except:
+        pass
+
+    if not services:
+        return ""
+    for i in range(0, len(services)):
+        if services[i] == file:
+            return  "Given Nickname for file is invalid. Another file with the same nickname exists"
+    return ""
+
+def addFile(file):
+    services = []
+    try: 
+        with open(KEY_CONFIG_FILE, 'r') as f:
+            services = json.load(f)
+    except:
+        pass
+    services.append(file)
+    with open(KEY_CONFIG_FILE, 'w') as f:
+        json.dump(services, f)
+  
+def registerKey(parent = None):
     def selectService():
         service = serviceVar.get()
         root.destroy()
         if service == "AWS":
-            loadAwsKey()
+            loadAwsKey(parent)
         else:
-            loadGoogleKey()
+            loadGoogleKey(parent)
+    def on_close():
+        root.destroy()
         
-    root = Tk()
+    root = Toplevel(parent) if parent else Tk()
     root.title('Python TTS App')
     root.grid_rowconfigure(0, weight = 1)
     root.grid_columnconfigure(0, weight = 1)
@@ -64,11 +101,9 @@ def registerKey():
     submitButton.pack(side = "bottom", pady = 5)
     submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
-    root.mainloop()
-
+    parent.wait_window(root)
     
-    
-def loadAwsKey():
+def loadAwsKey(parent = None):
     def validateKeys(awsAccessKey, awsSecretKey):
         session = boto3.Session(
             aws_access_key_id = awsAccessKey,
@@ -98,22 +133,32 @@ def loadAwsKey():
             errorLabel.config(text = "An Error has occured. Please try again later")
         return False
 
-    def saveKeys(access_key, secret_key, filename = ".aws_keys.txt"):
+    def saveKeys(access_key, secret_key, filename):
         keys = {"AWS_ACCESS_KEY_ID": access_key, "AWS_SECRET_ACCESS_KEY": secret_key}
         with open(pathresolver.get_key_file_path(filename), 'w') as file:
             json.dump(keys, file)
+        addFile(filename)
 
     def processKeys():
         awsAccessKey = accessKey.get()
         awsSecretKey = secretKey.get()
+        fileToSave = fileName.get()
+        fileToSave = '../.keys/.AWS_' + fileToSave + '.txt'
+        fileValidationStatus = validateFileName(fileToSave)
+        if fileValidationStatus != '':
+            errorLabel.config(text = fileValidationStatus)
+            return
         
         if not validateKeys(awsAccessKey, awsSecretKey):
             return
-        saveKeys(awsAccessKey, awsSecretKey)
+        saveKeys(awsAccessKey, awsSecretKey, fileToSave)
         tkinter.messagebox.showinfo("Key Management", "The keys have been saved")
         root.destroy()
 
-    root = Tk()
+    def on_close():
+        root.destroy()
+        
+    root = Toplevel(parent) if parent else Tk()
     root.title('Python TTS App')
     root.grid_rowconfigure(0, weight = 1)
     root.grid_columnconfigure(0, weight = 1)
@@ -156,6 +201,26 @@ def loadAwsKey():
     secretKey.grid(row = 1, column = 1, sticky = "nsew", padx = 50, pady = 10)
     secretKey.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
+    def on_entry_click(event):
+        if fileName.get() == placeholder:
+            fileName.delete(0, "end")  # Delete all the text in the entry
+            fileName.config(fg='black')
+
+    def on_focusout(event):
+        if fileName.get() == '':
+            fileName.insert(0, placeholder)
+            fileName.config(fg='grey')
+    fileNameLabel = Label(credentialsFrame, text = "Nickname for File", bg = "grey", anchor = "e", fg = "white", font = 'arial 20')
+    fileNameLabel.grid(row = 2, column = 0, sticky = "nsew", padx = 30, pady = 10)
+    fileName = Entry(credentialsFrame, bd = 0, highlightthickness = 0, relief = "flat", font = "Arial 20", bg = "white", fg = "black")
+    fileName.grid(row = 2, column = 1, sticky = "nsew", padx = 50, pady = 10)
+    fileName.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
+
+    placeholder = "Enter a name to identify this config file later"
+    fileName.insert(0, placeholder)
+    fileName.bind('<FocusIn>', on_entry_click)
+    fileName.bind('<FocusOut>', on_focusout)
+
     #Submit button
     submitFrame = Frame(mainFrame, bg = "grey")
     submitFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
@@ -171,9 +236,9 @@ def loadAwsKey():
     errorLabel = Label(errorFrame, text = "", anchor = "center", bg = "grey", fg = "#9D0000", font = "Arial 18")
     errorLabel.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
 
-    root.mainloop()
+    parent.wait_window(root)
 
-def loadGoogleKey():
+def loadGoogleKey(parent):
     def validateKey(keyPath):
         # A simple ops to validate the key
         try:
@@ -185,13 +250,19 @@ def loadGoogleKey():
             errorLabel.config(text = "Google API Error")
             return False
         except Exception as e:
-            
             errorLabel.config(text = "Invalid key or other error")
             return False
 
 
     def openFile():
-        appKeyPath = pathresolver.get_key_file_path(".google_key.json")
+        fileToSave = fileName.get()
+        fileToSave = '../.keys/.GOOGLE_' + fileToSave + '.json'
+        fileValidationStatus = validateFileName(fileToSave)
+        if fileValidationStatus != '':
+            errorLabel.config(text = fileValidationStatus)
+            return
+        
+        appKeyPath = pathresolver.get_key_file_path(fileToSave)
         keyPath = filedialog.askopenfilename(
             title="Select Google TTS Service Account JSON Key",
             filetypes=[("JSON Files", "*.json")]
@@ -207,12 +278,16 @@ def loadGoogleKey():
             os.makedirs(os.path.dirname(appKeyPath), exist_ok=True)
             shutil.copy(keyPath, appKeyPath)
             tkinter.messagebox.showinfo("Key Management", "The key has been saved")
+            addFile(fileToSave)
             root.destroy()
         except Exception as e:
             print(e)
             errorLabel.config(text = "Error: Failed to load Key")           
 
-    root = Tk()
+    def on_close():
+        root.destroy()
+        
+    root = Toplevel(parent) if parent else Tk()
     root.title('Python TTS App')
     root.grid_rowconfigure(0, weight = 1)
     root.grid_columnconfigure(0, weight = 1)
@@ -235,20 +310,46 @@ def loadGoogleKey():
                       bg = "grey", anchor = "w", fg = "white",font = 'arial 20', padx = 30)
     infoLabel.grid(row = 2, column = 0, sticky = "nsew")
 
+    credentialsFrame = Frame(mainFrame, bg = "grey")
+    credentialsFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
+    credentialsFrame.grid_rowconfigure(0, weight = 1)
+    credentialsFrame.grid_columnconfigure(1, weight = 1)
+
+    def on_entry_click(event):
+        if fileName.get() == placeholder:
+            fileName.delete(0, "end")
+            fileName.config(fg='black')
+
+    def on_focusout(event):
+        if fileName.get() == '':
+            fileName.insert(0, placeholder)
+            fileName.config(fg='grey')
+    fileNameLabel = Label(credentialsFrame, text = "Nickname for File", bg = "grey", anchor = "e", fg = "white", font = 'arial 20')
+    fileNameLabel.grid(row = 2, column = 0, sticky = "nsew", padx = 30, pady = 10)
+    fileName = Entry(credentialsFrame, bd = 0, highlightthickness = 0, relief = "flat", font = "Arial 20", bg = "white", fg = "black")
+    fileName.grid(row = 2, column = 1, sticky = "nsew", padx = 50, pady = 10)
+    fileName.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
+
+    placeholder = "Enter a name to identify this config file later"
+    fileName.insert(0, placeholder)
+    fileName.bind('<FocusIn>', on_entry_click)
+    fileName.bind('<FocusOut>', on_focusout)
+
     #File Browse button
     openFileFrame = Frame(mainFrame, bg = "grey")
-    openFileFrame.grid(row = 1, column = 0, sticky = "nsew", pady = (10, 0))
+    openFileFrame.grid(row = 3, column = 0, sticky = "nsew", pady = (10, 0))
     openFileFrame.grid_columnconfigure(0, weight = 1)
     openFileButton = Button(openFileFrame, text = "Open File", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = openFile)
     openFileButton.pack(side = "bottom", pady = 5)
     openFileButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
+
     #Errors
     errorFrame = Frame(mainFrame, bg = "grey")
-    errorFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
+    errorFrame.grid(row = 4, column = 0, sticky = "nsew", pady = (10, 0))
     errorFrame.grid_columnconfigure(0, weight = 1)
     errorLabel = Label(errorFrame, text = "", anchor = "center", bg = "grey", fg = "#9D0000", font = "Arial 18")
     errorLabel.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
 
-    root.mainloop()
+    parent.wait_window(root)
 

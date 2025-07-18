@@ -11,18 +11,18 @@ from keymanagement import pathresolver
 from botocore.exceptions import ClientError, NoCredentialsError, PartialCredentialsError, EndpointConnectionError
 
 def fileExists(filename):
-    if os.path.exists(pathresolver.get_key_file_path(filename)):
+    if os.path.exists(filename):
         return True
     else:
         return False
 
 def retrieveKeys(filename):
-    with open(pathresolver.get_key_file_path(filename), 'r') as file:
+    with open(filename, 'r') as file:
         keys = json.load(file)
     return keys
 
 def retrieveFilePath(filename):
-    return pathresolver.get_key_file_path(filename)
+    return filename
 
 def deleteKeyFile(filename):
-    os.remove(pathresolver.get_key_file_path(filename))
+    os.remove(filename)

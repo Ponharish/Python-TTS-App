@@ -19,9 +19,7 @@ from unidecode import unidecode
 
 from tkinter import *
 
-AWS_FILE_PATH = ".aws_keys.txt"
-
-def startAppGui():
+def startAppGui(AWS_FILE_PATH):
     global region
     
     def reconfigureKeys(): 
