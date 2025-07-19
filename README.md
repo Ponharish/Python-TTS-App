@@ -89,28 +89,51 @@ Follow these steps to set up your app with Google Cloud TTS:
 <br>
 
  **Download the `Python TTS.app` File**:
-   - Download the latest version of **`Python TTS.app`** file from the provided [link](https://github.com/Ponharish/Python-TTS-App/releases/tag/V3).
+   - Download the latest version of **`Python TTS.app`** file from the provided [link](https://github.com/Ponharish/Python-TTS-App/releases/tag/V3.1).
    - **Double-click** the `.app` file to open it.
 
  **Choosing your Engine**:
-  ![Service Selection](./pictures/ConfigureKeys_ServiceSelection.png)
+  ![Saved Service Selection](./pictures/ConfigureKeys_SavedServiceSelection.png)
    - Upon opening the app, a window will pop up asking for **TTS Service to be used**.
-   - Select the desired service and click **Next**.
+   - The list displays those services those are already saved in your system. New users have to add a service first.
+   - After selecting the desired TTS service and account, click **Next** to load the relevant TTS.
+
+   Note: If no services are saved in the system, the following page will be displayed. To use the app, add a service.
+   ![No Service Available](./pictures/ConfigureKeys_NoSavedService.png)
+  
+
+ **Adding New Engine**:
+   - New Engine can be added by clicking **Add Service** in the service selection window
+   - Next, Choose the service to use
+   ![Service Selection](./pictures/ConfigureKeys_ServiceSelection.png)
+
+   - Registering AWS Polly TTS
+    ![AWS Credentials Registration page](./pictures/configureKeys.png)
+      - Provide the following details to register your AWS account with the application
+        - **AWS Access Key**: Your **Access Key ID** from the AWS IAM user you created.
+        - **AWS Secret Key**: Your **Secret Access Key** associated with the IAM user.
+        - **Nickname for file**: Provide a nickname to identify this key during future use of application.
+
+   - Registering Google Cloud TTS
+    ![Google Cloud Credentials Registration page](./pictures/ConfigureKeys_googlecloudkeyregistrations.png)
+      - Once the above page loads, provide a nickname to identify this key during future use of application.
+      - Then click on **Open File** and open the **.json** file containing the key.
+   
+   - Upon completing the registration, the previous page to select engines will load.
+
+ **Removing Saved Engine**:
+  ![Deleting service](./pictures/ConfigureKeys_deleteService.png)
+   - New Engine can be added by clicking **Delete Service** in the service selection window.
+   - From the drop-down, choose the service to be removed from the system.
+   - Click **Remove** to delete the service from the system
 
 --- 
 
 ### Using Polly TTS
-1. ![AWS Credentials Registration page](./pictures/configureKeys.png)
-     - **AWS Access Key**: Your **Access Key ID** from the AWS IAM user you created.
-     - **AWS Secret Key**: Your **Secret Access Key** associated with the IAM user.
 
-2. **Main Page**:
-   - Upon completing the registration, the main page will load
-   ![Main page](./pictures/mainPage.png)
 
-3. **Convert Text to Speech**:
-  - In the main page, first select the region that is to be used
-   ![Main page - region selection](./pictures/mainPage_SelectRegion.png)
+ ![AWS](./pictures/awstts_mainPage.png)
+  - First select the region that is to be used
   - Then specify the **Engine** to be used (Standard or Neural)
     - **Standard Engine**: This engine uses a basic synthetic voice that may sound more robotic. It's efficient and works for most basic speech needs.
     - **Neural Engine**: This engine provides a more **natural-sounding voice** that is much closer to human speech, offering better intonation and fluidity.
@@ -123,25 +146,26 @@ Follow these steps to set up your app with Google Cloud TTS:
     - Type in the **text** (or SSML) that you want to be converted to speech. This is the content that will be spoken aloud by Amazon Polly.
 
   - **Click on Submit**:
-  ![Main page - submit](./pictures/mainPage_Submit.png)
     - After entering all the necessary details, click on the **"Submit"** button.
     - The app will generate the audio and **play it through your speakers**.
 
-4. **Signing in as another user or using another TTS service**:
-  - Click on **Reconfigure Keys**, which will open up the window for choosing the TTS service. Using this window, the new keys can be entered or the TTS service can be changed.
+ **Changing TTS service**:
+  - Click on **Change Service**, which will open up the window for choosing the TTS service. 
 
 
 #### Troubleshooting
 <br>
 
 Credential Registration Page
-![AWS Credentials Registration page Error](./pictures/configureKeys_Error.png) 
+![AWS Credentials Registration page Error](./pictures/configureKeys_AWS_Error.png)
 - **Invalid AWS Access Key**:  
   Ensure that the **AWS Access Key** entered is **valid**. Double-check that there are **no extra spaces or incorrect characters** before or after the key.
 
 - **Invalid AWS Secret Key**:  
   Verify that the **AWS Secret Key** is correct. Make sure there are **no extra spaces** or **incorrect characters** in the key, especially at the start or end.
 
+- **Invalid Nickname**:  
+  Ensure that the nickname provided does not contain any special character or space. Also, another configuration file unsing the same engine with the same name must not exist.
 
 Main Page
 
@@ -157,15 +181,10 @@ Main Page
 ---
 
 ### Using Google Cloud TTS
-1. ![Google Cloud Credentials Registration page](./pictures/ConfigureKeys_googlecloudkeyregistrations.png)
-     - Once the above page loads, click on **Open File** and open the **.json** file containing the key.
 
-2. **Main Page**:
-   - Upon completing the registration, the main page will load
-   ![Main page](./pictures/googletts_mainpage.png)
+![Main page](./pictures/googletts_mainpage.png)
 
-3. **Convert Text to Speech**:
-  - In the main page, first select the language that is to be used
+  - First select the language that is to be used
   - Then specify the **Engine** to be used (The list of available engines are loaded after languages are selected. Note: A particular language may not support all engines)
     - **Standard**: Basic synthetic voice with robotic tone; fast and efficient.
     - **Casual**: Conversational and relaxed tone, ideal for chatbots.
@@ -189,16 +208,19 @@ Main Page
     - After entering all the necessary details, click on the **"Submit"** button.
     - The app will generate the audio and **play it through your speakers**.
 
-4. **Signing in as another user or using another TTS service**:
-  - Click on **Reconfigure Keys**, which will open up the window for choosing the TTS service. Using this window, the new keys can be loaded or the TTS service can be changed.
+ **Changing TTS service**:
+  - Click on **Change Service**, which will open up the window for choosing the TTS service. 
 
 #### Troubleshooting
 <br>
 
 Credential Registration Page
-![Google Credentials Registration page Error](./pictures/ConfigureKeys_google_error.png) 
+![Google Credentials Registration page Error](./pictures/ConfigureKeys_google_error.png)
 - **Invalid Key**:  
   Ensure that the **.json** file is the correct file and is not corrupted.
+
+- **Invalid Nickname**:  
+  Ensure that the nickname provided does not contain any special character or space. Also, another configuration file unsing the same engine with the same name must not exist.
 
 Main Page
 
