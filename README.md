@@ -147,7 +147,7 @@ Follow these steps to set up your app with Google Cloud TTS:
 
   - **Click on Submit**:
     - After entering all the necessary details, click on the **"Submit"** button.
-    - The app will generate the audio and **play it through your speakers**.
+    - The app will generate the audio and open the audio playback window.
 
  **Changing TTS service**:
   - Click on **Change Service**, which will open up the window for choosing the TTS service. 
@@ -206,7 +206,7 @@ Main Page
 
   - **Click on Submit**:
     - After entering all the necessary details, click on the **"Submit"** button.
-    - The app will generate the audio and **play it through your speakers**.
+    - The app will generate the audio and open the audio playback window.
 
  **Changing TTS service**:
   - Click on **Change Service**, which will open up the window for choosing the TTS service. 
@@ -229,6 +229,22 @@ Main Page
 
 - **Empty Text Field**:  
   Make sure that the **text field** is not empty. The app will not proceed if no text is provided to convert into speech.
+
+---
+
+### Using Audio Playback window
+
+ ![audioplayback](./pictures/audioplayback.png)
+  - This window will load once the audio has been generated for the text.
+  - Click on **Play** to play the audio through your speakers.
+  - While playing, you can click on **Pause** to pause the audio. After pausing, you can choose the resume playing from the stopped location.
+  - The audio can be replayed from the start by clicking **Replay**.
+  - The audio can be downloaded as an **.mp3** file by clicking on **Download Audio**. Clicking the button open a pop up, promting to select the desired destination to save the audio. Once given, the audio will be saved at the specified location.
+  - Volume of the audio that is played live can be adjusted using using the slider next to the **Volume** label.
+  - The seek slider is placed at the bottom. It's position moves with respect to the time elapsed.
+  - The audio can be seeked by adjusting the seek slider.
+  - The time elapsed while playing the audio is displayed to the left of seek audio slider.
+  - The total duration of the audio is displayed to the right of seek audio slider.
 
 ---
 
