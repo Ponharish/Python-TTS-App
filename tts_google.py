@@ -20,7 +20,13 @@ from keymanagement import pathresolver
 from audiomanager import playaudio
 
 def startAppGui(GOOGLE_FILE_PATH):
-    def reconfigureKeys(): 
+    def get_all_toplevels(root):
+        return [w for w in root.winfo_children() if isinstance(w, Toplevel)]
+
+    def reconfigureKeys():
+        for win in get_all_toplevels(root):
+            win.destroy()
+        playaudio.stopMusic()
         root.destroy()
         changeservice.changeService()
     
@@ -128,7 +134,7 @@ def startAppGui(GOOGLE_FILE_PATH):
             errorLabel.config(text = "An error has occured")
             return
 
-        playaudio.playAudio(response.audio_content)
+        playaudio.playAudio(response.audio_content, root)
 
         updateQuota()
 

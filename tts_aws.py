@@ -21,8 +21,14 @@ from tkinter import *
 
 def startAppGui(AWS_FILE_PATH):
     global region
-    
-    def reconfigureKeys(): 
+
+    def get_all_toplevels(root):
+        return [w for w in root.winfo_children() if isinstance(w, Toplevel)]
+
+    def reconfigureKeys():
+        for win in get_all_toplevels(root):
+            win.destroy()
+        playaudio.stopMusic()
         root.destroy()
         changeservice.changeService()
         
@@ -136,7 +142,7 @@ def startAppGui(AWS_FILE_PATH):
             return
 
         audio_stream = response['AudioStream']
-        playaudio.playAudio(audio_stream.read())
+        playaudio.playAudio(audio_stream.read(), root)
         updateQuota()
 
 
