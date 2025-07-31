@@ -4,5 +4,6 @@ google
 google-cloud-texttospeech
 google-api-python-client
 langcodes
+mutagen
 unidecode
 pyttsx3
