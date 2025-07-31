@@ -89,7 +89,7 @@ Follow these steps to set up your app with Google Cloud TTS:
 <br>
 
  **Download the `Python TTS.app` File**:
-   - Download the latest version of **`Python TTS.app`** file from the provided [link](https://github.com/Ponharish/Python-TTS-App/releases/tag/V3.2).
+   - Download the latest version of **`Python TTS.app`** file from the provided [link](https://github.com/Ponharish/Python-TTS-App/releases/tag/V3.2). 
    - **Double-click** the `.app` file to open it.
 
  **Choosing your Engine**:
