@@ -26,7 +26,10 @@ def startAppGui(GOOGLE_FILE_PATH):
     def reconfigureKeys():
         for win in get_all_toplevels(root):
             win.destroy()
-        playaudio.stopMusic()
+        try:    
+            playaudio.stopMusic()
+        except Exception as e:
+            pass
         root.destroy()
         changeservice.changeService()
     
