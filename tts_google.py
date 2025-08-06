@@ -164,7 +164,7 @@ def startAppGui(GOOGLE_FILE_PATH):
     credentialsFrame.grid_rowconfigure(0, weight = 1)
     credentialsFrame.grid_columnconfigure(1, weight = 1)
 
-    reconfigureKeysButton = Button(credentialsFrame, text = "Change Service", font = "Arial 20", fg = "black", anchor = "center", command = reconfigureKeys)
+    reconfigureKeysButton = Button(credentialsFrame, text = "Change Service", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = reconfigureKeys)
     reconfigureKeysButton.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
     reconfigureKeysButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
     KeyLabel = Label(credentialsFrame, text = "Google Cloud Key is loaded from file", bg = "grey", anchor = "w", fg = "white", font = 'arial 20')
@@ -214,11 +214,11 @@ def startAppGui(GOOGLE_FILE_PATH):
     genderVar = StringVar(value = "MALE")
     genderFrame = Frame(inputFrame, bg = "grey")
     genderFrame.grid(row = 2, column = 1, sticky = "nsew", padx = 0, pady = 5)
-    maleRadio = Radiobutton(genderFrame, text = "MALE", variable = genderVar, value = "MALE", font = "Arial 20", bg = "grey", fg = "white", command=updateGender)
+    maleRadio = Radiobutton(genderFrame, text = "MALE", variable = genderVar, value = "MALE", font = "Arial 20", command=updateGender)
     maleRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    femaleRadio = Radiobutton(genderFrame, text = "FEMALE", variable = genderVar, value = "FEMALE", font = "Arial 20", bg = "grey", fg = "white", command=updateGender)
+    femaleRadio = Radiobutton(genderFrame, text = "FEMALE", variable = genderVar, value = "FEMALE", font = "Arial 20", command=updateGender)
     femaleRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
-    neutralRadio = Radiobutton(genderFrame, text = "NEUTRAL", variable = genderVar, value = "NEUTRAL", font = "Arial 20", bg = "grey", fg = "white", command=updateGender)
+    neutralRadio = Radiobutton(genderFrame, text = "NEUTRAL", variable = genderVar, value = "NEUTRAL", font = "Arial 20", bg = "grey", command=updateGender)
     neutralRadio.grid(row = 0, column = 2, sticky = "w", padx = 50, pady = 5)
     
 
@@ -256,7 +256,7 @@ def startAppGui(GOOGLE_FILE_PATH):
     submitFrame = Frame(mainFrame, bg = "grey")
     submitFrame.grid(row = 4, column = 0, sticky = "nsew", pady = (10, 0))
     submitFrame.grid_columnconfigure(0, weight = 1)
-    submitButton = Button(submitFrame, text = "Submit", font = "Arial 20", fg = "black", anchor = "center", command = playAudio)
+    submitButton = Button(submitFrame, text = "Submit", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = playAudio)
     submitButton.pack(side = "bottom", pady = 5)
     submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
