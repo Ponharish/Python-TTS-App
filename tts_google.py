@@ -214,9 +214,9 @@ def startAppGui(GOOGLE_FILE_PATH):
     genderVar = StringVar(value = "MALE")
     genderFrame = Frame(inputFrame, bg = "grey")
     genderFrame.grid(row = 2, column = 1, sticky = "nsew", padx = 0, pady = 5)
-    maleRadio = Radiobutton(genderFrame, text = "MALE", variable = genderVar, value = "MALE", font = "Arial 20", command=updateGender)
+    maleRadio = Radiobutton(genderFrame, text = "MALE", variable = genderVar, value = "MALE", font = "Arial 20", bg = "grey", command=updateGender)
     maleRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    femaleRadio = Radiobutton(genderFrame, text = "FEMALE", variable = genderVar, value = "FEMALE", font = "Arial 20", command=updateGender)
+    femaleRadio = Radiobutton(genderFrame, text = "FEMALE", variable = genderVar, value = "FEMALE", font = "Arial 20", bg = "grey", command=updateGender)
     femaleRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
     neutralRadio = Radiobutton(genderFrame, text = "NEUTRAL", variable = genderVar, value = "NEUTRAL", font = "Arial 20", bg = "grey", command=updateGender)
     neutralRadio.grid(row = 0, column = 2, sticky = "w", padx = 50, pady = 5)
@@ -240,9 +240,9 @@ def startAppGui(GOOGLE_FILE_PATH):
     textTypeVar = StringVar(value = "text")
     textTypeFrame = Frame(inputFrame, bg = "grey")
     textTypeFrame.grid(row = 4, column = 1, sticky = "nsew", padx = 0, pady = 5)
-    textRadio = Radiobutton(textTypeFrame, text = "Text        ", variable = textTypeVar, value = "text", font = "Arial 20", bg = "grey", fg = "white")
+    textRadio = Radiobutton(textTypeFrame, text = "Text        ", variable = textTypeVar, value = "text", font = "Arial 20", bg = "grey")
     textRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    ssmlRadio = Radiobutton(textTypeFrame, text = "SSML    ", variable = textTypeVar, value = "ssml", font = "Arial 20", bg = "grey", fg = "white")
+    ssmlRadio = Radiobutton(textTypeFrame, text = "SSML    ", variable = textTypeVar, value = "ssml", font = "Arial 20", bg = "grey")
     ssmlRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
 
     #Text to be converted to speech

@@ -88,9 +88,9 @@ def registerKey(parent = None):
     serviceVar = StringVar(value = "AWS")
     serviceFrame = Frame(mainFrame, bg = "grey")
     serviceFrame.grid(row = 1, column = 0, sticky = "nsew", pady = (10, 0))
-    awsRadio = Radiobutton(serviceFrame, text = "AWS", variable = serviceVar, value = "AWS", font = "Arial 20", bg = "grey", fg = "white")
+    awsRadio = Radiobutton(serviceFrame, text = "AWS", variable = serviceVar, value = "AWS", font = "Arial 20", bg = "grey")
     awsRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    googleRadio = Radiobutton(serviceFrame, text = "Google Cloud", variable = serviceVar, value = "Google", font = "Arial 20", bg = "grey", fg = "white")
+    googleRadio = Radiobutton(serviceFrame, text = "Google Cloud", variable = serviceVar, value = "Google", font = "Arial 20", bg = "grey")
     googleRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
     
     #Submit button

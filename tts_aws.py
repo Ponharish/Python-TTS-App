@@ -210,9 +210,9 @@ def startAppGui(AWS_FILE_PATH):
     engineVar = StringVar(value = "standard")
     engineFrame = Frame(inputFrame, bg = "grey")
     engineFrame.grid(row = 0, column = 1, sticky = "nsew", padx = 0, pady = 5)
-    standardRadio = Radiobutton(engineFrame, text = "Standard", variable = engineVar, value = "standard", font = "Arial 20", bg = "grey", fg = "white", command=updateEngine)
+    standardRadio = Radiobutton(engineFrame, text = "Standard", variable = engineVar, value = "standard", font = "Arial 20", bg = "grey", command=updateEngine)
     standardRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    neuralRadio = Radiobutton(engineFrame, text = "Neural", variable = engineVar, value = "neural", font = "Arial 20", bg = "grey", fg = "white", command=updateEngine)
+    neuralRadio = Radiobutton(engineFrame, text = "Neural", variable = engineVar, value = "neural", font = "Arial 20", bg = "grey", command=updateEngine)
     neuralRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
 
     #Language Selection
@@ -250,9 +250,9 @@ def startAppGui(AWS_FILE_PATH):
     textTypeVar = StringVar(value = "text")
     textTypeFrame = Frame(inputFrame, bg = "grey")
     textTypeFrame.grid(row = 3, column = 1, sticky = "nsew", padx = 0, pady = 5)
-    textRadio = Radiobutton(textTypeFrame, text = "Text        ", variable = textTypeVar, value = "text", font = "Arial 20", bg = "grey", fg = "white")
+    textRadio = Radiobutton(textTypeFrame, text = "Text        ", variable = textTypeVar, value = "text", font = "Arial 20", bg = "grey")
     textRadio.grid(row = 0, column = 0, sticky = "w", padx = 50, pady = 5)
-    ssmlRadio = Radiobutton(textTypeFrame, text = "SSML    ", variable = textTypeVar, value = "ssml", font = "Arial 20", bg = "grey", fg = "white")
+    ssmlRadio = Radiobutton(textTypeFrame, text = "SSML    ", variable = textTypeVar, value = "ssml", font = "Arial 20", bg = "grey")
     ssmlRadio.grid(row = 0, column = 1, sticky = "w", padx = 50, pady = 5)
 
     #Text to be converted to speech
