@@ -173,15 +173,15 @@ def playAudio(audioBytes, root):
     headerLabel.grid(row = 0, column = 1, sticky = "nsew", pady = 15)
 
     # Control Buttons
-    togglePauseButton = Button(mainFrame, text = "Play", bg = "blue", fg = "black", font = "Arial 20", command = togglePause)
+    togglePauseButton = Button(mainFrame, text = "Play", fg = "black", font = "Arial 20", command = togglePause)
     togglePauseButton.grid(row = 1, column = 1, sticky = "nsew", padx = 200, pady = 10)
     togglePauseButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
-    replayButton = Button(mainFrame, text = "Replay", bg = "blue", fg = "black", font = "Arial 20",  command = replay)
+    replayButton = Button(mainFrame, text = "Replay", fg = "black", font = "Arial 20",  command = replay)
     replayButton.grid(row = 2, column = 1, sticky = "nsew", padx = 200, pady = 10)
     replayButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
-    downloadButton = Button(mainFrame, text = "Download Audio", bg = "blue", fg = "black", font = "Arial 20",  command = download)
+    downloadButton = Button(mainFrame, text = "Download Audio", fg = "black", font = "Arial 20",  command = download)
     downloadButton.grid(row = 3, column = 1, sticky = "nsew", padx = 200, pady = 10)
     downloadButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 

@@ -125,7 +125,7 @@ def selectService():
     nextFrame = Frame(mainFrame, bg = "grey")
     nextFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
     nextFrame.grid_columnconfigure(0, weight = 1)
-    nextButton = Button(nextFrame, text = "Next", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = selectService)
+    nextButton = Button(nextFrame, text = "Next", font = "Arial 20", fg = "black", anchor = "center", command = selectService)
     nextButton.pack(side = "bottom", pady = 5)
     nextButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
@@ -133,7 +133,7 @@ def selectService():
     newserviceFrame = Frame(mainFrame, bg = "grey")
     newserviceFrame.grid(row = 3, column = 0, sticky = "nsew", pady = (10, 0))
     newserviceFrame.grid_columnconfigure(0, weight = 1)
-    newserviceButton = Button(newserviceFrame, text = "Add Service", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = addService)
+    newserviceButton = Button(newserviceFrame, text = "Add Service", font = "Arial 20", fg = "black", anchor = "center", command = addService)
     newserviceButton.pack(side = "bottom", pady = 5)
     newserviceButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
@@ -141,7 +141,7 @@ def selectService():
     rmserviceFrame = Frame(mainFrame, bg = "grey")
     rmserviceFrame.grid(row = 4, column = 0, sticky = "nsew", pady = (10, 0))
     rmserviceFrame.grid_columnconfigure(0, weight = 1)
-    rmserviceButton= Button(rmserviceFrame, text = "Delete Service", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = deleteService)
+    rmserviceButton= Button(rmserviceFrame, text = "Delete Service", font = "Arial 20", fg = "black", anchor = "center", command = deleteService)
     rmserviceButton.pack(side = "bottom", pady = 5)
     rmserviceButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 

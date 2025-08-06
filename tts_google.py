@@ -164,7 +164,7 @@ def startAppGui(GOOGLE_FILE_PATH):
     credentialsFrame.grid_rowconfigure(0, weight = 1)
     credentialsFrame.grid_columnconfigure(1, weight = 1)
 
-    reconfigureKeysButton = Button(credentialsFrame, text = "Change Service", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = reconfigureKeys)
+    reconfigureKeysButton = Button(credentialsFrame, text = "Change Service", font = "Arial 20", fg = "black", anchor = "center", command = reconfigureKeys)
     reconfigureKeysButton.grid(row = 0, column = 0, sticky = "nsew", padx = 30, pady = 10)
     reconfigureKeysButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
     KeyLabel = Label(credentialsFrame, text = "Google Cloud Key is loaded from file", bg = "grey", anchor = "w", fg = "white", font = 'arial 20')
@@ -256,7 +256,7 @@ def startAppGui(GOOGLE_FILE_PATH):
     submitFrame = Frame(mainFrame, bg = "grey")
     submitFrame.grid(row = 4, column = 0, sticky = "nsew", pady = (10, 0))
     submitFrame.grid_columnconfigure(0, weight = 1)
-    submitButton = Button(submitFrame, text = "Submit", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = playAudio)
+    submitButton = Button(submitFrame, text = "Submit", font = "Arial 20", fg = "black", anchor = "center", command = playAudio)
     submitButton.pack(side = "bottom", pady = 5)
     submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 

@@ -98,7 +98,7 @@ def removeService(parent = None):
     nextFrame = Frame(mainFrame, bg = "grey")
     nextFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
     nextFrame.grid_columnconfigure(0, weight = 1)
-    nextButton = Button(nextFrame, text = "Remove", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = remove)
+    nextButton = Button(nextFrame, text = "Remove", font = "Arial 20", fg = "black", anchor = "center", command = remove)
     nextButton.pack(side = "bottom", pady = 5)
     nextButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 

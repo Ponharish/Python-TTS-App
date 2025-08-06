@@ -97,7 +97,7 @@ def registerKey(parent = None):
     submitFrame = Frame(mainFrame, bg = "grey")
     submitFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
     submitFrame.grid_columnconfigure(0, weight = 1)
-    submitButton = Button(submitFrame, text = "Next", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = selectService)
+    submitButton = Button(submitFrame, text = "Next", font = "Arial 20", fg = "black", anchor = "center", command = selectService)
     submitButton.pack(side = "bottom", pady = 5)
     submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
@@ -225,7 +225,7 @@ def loadAwsKey(parent = None):
     submitFrame = Frame(mainFrame, bg = "grey")
     submitFrame.grid(row = 2, column = 0, sticky = "nsew", pady = (10, 0))
     submitFrame.grid_columnconfigure(0, weight = 1)
-    submitButton = Button(submitFrame, text = "Save", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = processKeys)
+    submitButton = Button(submitFrame, text = "Save", font = "Arial 20", fg = "black", anchor = "center", command = processKeys)
     submitButton.pack(side = "bottom", pady = 5)
     submitButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
@@ -339,7 +339,7 @@ def loadGoogleKey(parent):
     openFileFrame = Frame(mainFrame, bg = "grey")
     openFileFrame.grid(row = 3, column = 0, sticky = "nsew", pady = (10, 0))
     openFileFrame.grid_columnconfigure(0, weight = 1)
-    openFileButton = Button(openFileFrame, text = "Open File", font = "Arial 20", bg = "blue", fg = "black", anchor = "center", command = openFile)
+    openFileButton = Button(openFileFrame, text = "Open File", font = "Arial 20", fg = "black", anchor = "center", command = openFile)
     openFileButton.pack(side = "bottom", pady = 5)
     openFileButton.config(borderwidth = 2, relief = "solid", highlightthickness = 0, bd = 0)
 
